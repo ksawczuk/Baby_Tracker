@@ -1,0 +1,66 @@
+﻿@model Baby_Tracker.Models.Baby
+
+@{
+    ViewData["Title"] = "CreateBaby";
+}
+
+<h1>CreateBaby</h1>
+
+<h4>Baby</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateBaby">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nickname" class="control-label"></label>
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFileName" class="control-label"></label>
+                <input asp-for="ImageFileName" class="form-control" />
+                <span asp-validation-for="ImageFileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="control-label"></label>
+                <input asp-for="Height" class="form-control" />
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDateTime" class="control-label"></label>
+                <input asp-for="BirthDateTime" class="form-control" />
+                <span asp-validation-for="BirthDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthWeight" class="control-label"></label>
+                <input asp-for="BirthWeight" class="form-control" />
+                <span asp-validation-for="BirthWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthHeight" class="control-label"></label>
+                <input asp-for="BirthHeight" class="form-control" />
+                <span asp-validation-for="BirthHeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
