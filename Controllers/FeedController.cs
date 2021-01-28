@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Baby_Tracker.Controllers.Babies
+namespace Baby_Tracker.Controllers
 {
-    public class BabyController : Controller
+    public class FeedController : Controller
     {
         public IActionResult Index()
         {
-            
             return View();
         }
     }

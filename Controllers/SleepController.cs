@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Baby_Tracker.Controllers.Feeds
+namespace Baby_Tracker.Controllers
 {
-    public class FeedController : Controller
+    public class SleepController : Controller
     {
         public IActionResult Index()
         {
