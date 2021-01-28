@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,8 +8,11 @@ namespace Baby_Tracker.Models
 {
     public class Sleep
     {
-        public int SleepId { get; set; }
-        public int BabyId { get; set; }
+        [Required]
+        public Guid SleepId { get; set; }
+        [Required]
+        public Guid BabyId { get; set; }
+        [Required]
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public List<Intervention> Interventions { get; set; }
@@ -24,7 +28,9 @@ namespace Baby_Tracker.Models
 
     public class Intervention
     {
-        public int InterventionId { get; set; }
+        [Required]
+        public Guid InterventionId { get; set; }
+        [Required]
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Sooth FirstTry { get; set; }

@@ -29,16 +29,24 @@ namespace Baby_Tracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            // Add authentication db connection and configure (auth_db)
             services.AddDbContext<AuthenticationDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                // Enable logging to check httpcontext setup for EF Global Query Filtering.
+                options.EnableSensitiveDataLogging();
+            });
+
             services.AddDefaultIdentity<BabyUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AuthenticationDbContext>();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
-                Configuration.GetConnectionString("ApplicationConnection")));
-
+            // Add application db connection and configure (baby_db)
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("ApplicationConnection"));
+                // Enable logging to check httpcontext setup for EF Global Query Filtering.
+                options.EnableSensitiveDataLogging();
+            });
             
             services.AddRazorPages();
         }

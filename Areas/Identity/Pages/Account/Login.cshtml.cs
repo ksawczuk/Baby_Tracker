@@ -79,7 +79,8 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
             // In no baby is associated, go to appropriate page.
 
 
-            returnUrl = returnUrl ?? Url.Content("~/CreateBaby/CreateBaby");
+
+            returnUrl = returnUrl ?? Url.Content("~/Baby/CreateBaby");
 
             if (ModelState.IsValid)
             {
@@ -90,7 +91,7 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
                 {
                     
                     _logger.LogInformation("User logged in.");
-                    if (User.Identity.FindFirst()
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
