@@ -12,10 +12,10 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                 columns: table => new
                 {
                     BabyId = table.Column<Guid>(nullable: false),
-                    OwnerId1 = table.Column<string>(nullable: true),
+                    OwnerId1 = table.Column<string>(nullable: false),
                     OwnerId2 = table.Column<string>(nullable: true),
                     OwnerId3 = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Nickname = table.Column<string>(nullable: true),
                     ImageFileName = table.Column<string>(nullable: true),
                     Weight = table.Column<double>(nullable: false),
