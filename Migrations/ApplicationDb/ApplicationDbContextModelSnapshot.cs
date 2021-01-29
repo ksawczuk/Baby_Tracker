@@ -66,17 +66,14 @@ namespace Baby_Tracker.Migrations.ApplicationDb
 
             modelBuilder.Entity("Baby_Tracker.Models.Feed", b =>
                 {
-                    b.Property<int>("FeedId")
+                    b.Property<Guid>("FeedId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Alertness")
                         .HasColumnType("int");
 
-                    b.Property<int>("BabyId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("BabyId1")
+                    b.Property<Guid>("BabyId")
                         .HasColumnType("char(36)");
 
                     b.Property<int>("ChinEngagement")
@@ -97,15 +94,15 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                     b.Property<int>("LatchQuality")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SleepId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SleepId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("FeedId");
 
-                    b.HasIndex("BabyId1");
+                    b.HasIndex("BabyId");
 
                     b.HasIndex("SleepId");
 
@@ -114,9 +111,9 @@ namespace Baby_Tracker.Migrations.ApplicationDb
 
             modelBuilder.Entity("Baby_Tracker.Models.Intervention", b =>
                 {
-                    b.Property<int>("InterventionId")
+                    b.Property<Guid>("InterventionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime(6)");
@@ -133,8 +130,8 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                     b.Property<int>("SecondTry")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SleepId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SleepId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
@@ -151,14 +148,11 @@ namespace Baby_Tracker.Migrations.ApplicationDb
 
             modelBuilder.Entity("Baby_Tracker.Models.Sleep", b =>
                 {
-                    b.Property<int>("SleepId")
+                    b.Property<Guid>("SleepId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
-                    b.Property<int>("BabyId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("BabyId1")
+                    b.Property<Guid>("BabyId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("EndTime")
@@ -175,7 +169,7 @@ namespace Baby_Tracker.Migrations.ApplicationDb
 
                     b.HasKey("SleepId");
 
-                    b.HasIndex("BabyId1");
+                    b.HasIndex("BabyId");
 
                     b.ToTable("Sleep");
                 });
@@ -184,7 +178,9 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                 {
                     b.HasOne("Baby_Tracker.Models.Baby", null)
                         .WithMany("Feeds")
-                        .HasForeignKey("BabyId1");
+                        .HasForeignKey("BabyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Baby_Tracker.Models.Sleep", null)
                         .WithMany("SleepFeeds")
@@ -202,7 +198,9 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                 {
                     b.HasOne("Baby_Tracker.Models.Baby", null)
                         .WithMany("Sleeps")
-                        .HasForeignKey("BabyId1");
+                        .HasForeignKey("BabyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

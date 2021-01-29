@@ -8,11 +8,8 @@ namespace Baby_Tracker.Models
 {
     public class Sleep
     {
-        [Required]
         public Guid SleepId { get; set; }
-        [Required]
         public Guid BabyId { get; set; }
-        [Required]
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public List<Intervention> Interventions { get; set; }
@@ -28,7 +25,6 @@ namespace Baby_Tracker.Models
 
     public class Intervention
     {
-        [Required]
         public Guid InterventionId { get; set; }
         [Required]
         public DateTime StartTime { get; set; }

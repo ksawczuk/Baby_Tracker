@@ -41,16 +41,25 @@ namespace Baby_Tracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateBaby(Models.Baby baby)
         {
+
+
             if (ModelState.IsValid)
             {
-                baby.OwnerId1 = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 baby.BabyId = Guid.NewGuid();
+                baby.OwnerId1 = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 baby.DateAdded = DateTime.Now;
                 _db.Baby.Add(baby);
                 _db.SaveChanges();
 
-                // update Owner record with BabyId
-                // _db2. = baby.BabyId; // How do I write to the authentication db? Is that within the framework of a Claim?
+                // grab the current user record from Identity db.
+                var user = _db2.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                // update BabyId field in current user record.
+                user.BabyId = baby.BabyId;
+                _db2.Users.Update(user);
+                _db2.SaveChanges();
+
+
                 return RedirectToAction("~/Baby/BabyLanding/id", new { id = baby.BabyId }); // need to redirect to the baby just created.
             }
 

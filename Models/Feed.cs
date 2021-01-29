@@ -8,12 +8,9 @@ namespace Baby_Tracker.Models
 {
     public class Feed
     {
-        [Required]
         public Guid FeedId { get; set; }
-        [Required]
         public Guid BabyId { get; set; }
         public Guid? SleepId { get; set; }
-        [Required]
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public LatchQuality LatchQuality { get; set; }

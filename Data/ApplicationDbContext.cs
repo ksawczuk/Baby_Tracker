@@ -13,17 +13,20 @@ namespace Baby_Tracker.Data
 
     public class ApplicationDbContext : DbContext
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        // Problem with Global Query Filtering as it won't allow me to make new records.
+        // private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<Baby> Baby { get; set; }
         public DbSet<Sleep> Sleep { get; set; }
         public DbSet<Feed> Feed { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, 
-            IHttpContextAccessor httpContextAccessor)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
+            // Issue with Global Query Filtering as per the description above.
+            // _httpContextAccessor = httpContextAccessor;
         }
     
+        /*
+        Removed for now as implementation is to support Global Query Filtering.
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -37,6 +40,6 @@ namespace Baby_Tracker.Data
                     .User.FindFirstValue(ClaimTypes.NameIdentifier)) | (baby_cx.OwnerId3 == _httpContextAccessor.HttpContext
                     .User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
-         
+        */
     }
 }
