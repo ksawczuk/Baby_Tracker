@@ -41,8 +41,6 @@ namespace Baby_Tracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateBaby(Models.Baby baby)
         {
-
-
             if (ModelState.IsValid)
             {
                 baby.BabyId = Guid.NewGuid();
@@ -60,7 +58,7 @@ namespace Baby_Tracker.Controllers
                 _db2.SaveChanges();
 
 
-                return RedirectToAction("~/Baby/BabyLanding/id", new { id = baby.BabyId }); // need to redirect to the baby just created.
+                return RedirectToAction("BabyLanding/id", new {id = baby.BabyId}); // need to redirect to the baby just created.
             }
 
             return RedirectToAction();

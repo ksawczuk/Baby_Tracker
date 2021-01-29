@@ -35,7 +35,7 @@ namespace Baby_Tracker
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
                 // not required until issues with Global Query Filtering are resolved.
                 // Enable logging to check httpcontext setup for EF Global Query Filtering.
-                // options.EnableSensitiveDataLogging();
+                options.EnableSensitiveDataLogging();
             });
 
             services.AddDefaultIdentity<BabyUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -46,7 +46,7 @@ namespace Baby_Tracker
             {
                 options.UseMySql(Configuration.GetConnectionString("ApplicationConnection"));
                 // Enable logging to check httpcontext setup for EF Global Query Filtering.
-                // options.EnableSensitiveDataLogging();
+                options.EnableSensitiveDataLogging();
             });
             
             services.AddRazorPages();
