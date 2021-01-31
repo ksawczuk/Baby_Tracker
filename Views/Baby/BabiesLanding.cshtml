@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Baby> 
+
+
+
+@foreach (var baby in Model)
+{
+    <p>
+    <h1>@baby.Name</h1>
+    @{
+        var age = DateTime.Now.Subtract(baby.BirthDateTime); 
+    }
+    <h3>@baby.Nickname is @age days old today!</h3>
+    </p>
+
+}

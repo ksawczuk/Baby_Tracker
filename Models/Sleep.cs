@@ -26,7 +26,6 @@ namespace Baby_Tracker.Models
     public class Intervention
     {
         public Guid InterventionId { get; set; }
-        [Required]
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Sooth FirstTry { get; set; }

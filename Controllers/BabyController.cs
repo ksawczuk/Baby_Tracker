@@ -22,8 +22,30 @@ namespace Baby_Tracker.Controllers
         }
         public IActionResult Index()
         {
+            
+            List<Baby> _baby_list = new List<Baby>();
+            _baby_list = GetBabies();
 
-            return View();
+            if (_baby_list.Count == 0)
+            {
+                return RedirectToAction("CreateBaby", "Baby");
+            }
+
+            else if (_baby_list.Count == 1)
+            {
+                return RedirectToAction("BabyLanding", "Baby");
+            }
+            
+            else if (_baby_list.Count > 1)
+            {
+                return RedirectToAction("BabiesLanding", "Baby");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // return View();
         }
 
         // GET babies/CreateBaby No HttpMethod because in this instance there is no baby to retreive.
@@ -58,28 +80,46 @@ namespace Baby_Tracker.Controllers
                 _db2.SaveChanges();
 
 
-                return RedirectToAction("BabyLanding/id", new {id = baby.BabyId}); // need to redirect to the baby just created.
+                return RedirectToAction("BabyLanding", "Baby");
             }
 
             return RedirectToAction();
         }
     
 
-    public IActionResult BabyLanding(Guid id)
+        public IActionResult BabyLanding()
         {
-            //if (id == null)
-            //{
-            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
-            //Find a working replacement with Microsoft.AspNetCore.Mvc;
-            //}
 
-            Models.Baby baby = _db.Baby.Find(id);
-            if (baby.Name == null)
-            {
-                //return HttpNotFound();
-                //Find a working replacement with Microsoft.AspNetCore.Mvc;
-            }
+            List<Baby> babies = new List<Baby>();
+            babies = GetBabies();
+            Baby baby = babies[0];
+
             return View(baby);
         }
+
+        public IActionResult BabiesLanding()
+        {
+            List<Baby> babies = new List<Baby>();
+            babies = GetBabies();
+            return View(babies);
+        }
+
+
+        private List<Baby> GetBabies()
+        {
+            var currentUser = _db2.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            IEnumerable<Baby> babyQuery =
+                 from user_baby in _db.Baby
+                 where user_baby.OwnerId1 == currentUser.Id
+                 select user_baby;
+
+            List<Baby> baby_list = new List<Baby>();
+            foreach (Baby user_baby in babyQuery)
+            {
+                baby_list.Add(user_baby);
+            }
+            return baby_list;
+        } 
     }
+
 }

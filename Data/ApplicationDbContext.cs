@@ -13,7 +13,6 @@ namespace Baby_Tracker.Data
 
     public class ApplicationDbContext : DbContext
     {
-
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<Baby> Baby { get; set; }
@@ -25,7 +24,7 @@ namespace Baby_Tracker.Data
         { 
             _httpContextAccessor = httpContextAccessor;
         }
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -35,9 +34,12 @@ namespace Baby_Tracker.Data
             builder.Entity<Baby>()
                 .HasQueryFilter(
                     baby_cx => (baby_cx.OwnerId1 == _httpContextAccessor.HttpContext
-                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) | (baby_cx.OwnerId2 == _httpContextAccessor.HttpContext
-                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) | (baby_cx.OwnerId3 == _httpContextAccessor.HttpContext
+                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) || (baby_cx.OwnerId2 == _httpContextAccessor.HttpContext
+                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) || (baby_cx.OwnerId3 == _httpContextAccessor.HttpContext
                     .User.FindFirstValue(ClaimTypes.NameIdentifier)));
+
         }
+        
+
     }
 }

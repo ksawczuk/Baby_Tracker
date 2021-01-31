@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Baby_Tracker.Models;
 
+
 namespace Baby_Tracker.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -62,7 +63,6 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -74,25 +74,18 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            // change the returnUrl functionality to redirect to baby list if more than one baby is associated with the account.
-            // If only one baby is associated, go to that baby's page.
-            // In no baby is associated, go to appropriate page.
 
-
-
-            returnUrl = returnUrl ?? Url.Content("~/Baby/CreateBaby");
-
+            returnUrl = returnUrl ?? Url.Content("~/Baby/Index");
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+               
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
-                    
+                {                
                     _logger.LogInformation("User logged in.");
-
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "Baby");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -103,12 +96,13 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
-                else
+                else 
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }
+                     
 
             // If we got this far, something failed, redisplay form
             return Page();
