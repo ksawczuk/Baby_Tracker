@@ -22,8 +22,8 @@ namespace Baby_Tracker.Controllers
         }
         public IActionResult Index()
         {
-            
-            List<Baby> _baby_list = new List<Baby>();
+
+            List<Baby> _baby_list;
             _baby_list = GetBabies();
 
             if (_baby_list.Count == 0)
@@ -44,15 +44,11 @@ namespace Baby_Tracker.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            // return View();
         }
 
         // GET babies/CreateBaby No HttpMethod because in this instance there is no baby to retreive.
         public IActionResult CreateBaby()
         {
-
-
             return View();
         }
 
@@ -90,16 +86,15 @@ namespace Baby_Tracker.Controllers
         public IActionResult BabyLanding()
         {
 
-            List<Baby> babies = new List<Baby>();
+            List<Baby> babies;
             babies = GetBabies();
             Baby baby = babies[0];
-
             return View(baby);
         }
 
         public IActionResult BabiesLanding()
         {
-            List<Baby> babies = new List<Baby>();
+            List<Baby> babies;
             babies = GetBabies();
             return View(babies);
         }

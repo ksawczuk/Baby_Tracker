@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Baby_Tracker.Migrations
+namespace Baby_Tracker.Migrations.AuthenticationDb
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    [Migration("20210129051316_InitialAuthenticationDb")]
-    partial class InitialAuthenticationDb
+    [Migration("20210203215512_AuthInitialMigration")]
+    partial class AuthInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

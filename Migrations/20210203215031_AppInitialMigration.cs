@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Baby_Tracker.Migrations.ApplicationDb
+namespace Baby_Tracker.Migrations
 {
-    public partial class InitialAppDbMigration : Migration
+    public partial class AppInitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                     OwnerId1 = table.Column<string>(nullable: false),
                     OwnerId2 = table.Column<string>(nullable: true),
                     OwnerId3 = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     Nickname = table.Column<string>(nullable: true),
                     ImageFileName = table.Column<string>(nullable: true),
                     Weight = table.Column<double>(nullable: false),
@@ -37,9 +37,9 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                     SleepId = table.Column<Guid>(nullable: false),
                     BabyId = table.Column<Guid>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    SleepSummary = table.Column<int>(nullable: false),
-                    IsNap = table.Column<bool>(nullable: false)
+                    EndTime = table.Column<DateTime>(nullable: true),
+                    SleepSummary = table.Column<int>(nullable: true),
+                    IsNap = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,13 +60,13 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                     BabyId = table.Column<Guid>(nullable: false),
                     SleepId = table.Column<Guid>(nullable: true),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    LatchQuality = table.Column<int>(nullable: false),
-                    ChinEngagement = table.Column<int>(nullable: false),
-                    Alertness = table.Column<int>(nullable: false),
-                    Fussiness = table.Column<int>(nullable: false),
-                    FeedSummary = table.Column<int>(nullable: false),
-                    IsDreamFeed = table.Column<bool>(nullable: false)
+                    EndTime = table.Column<DateTime>(nullable: true),
+                    LatchQuality = table.Column<int>(nullable: true),
+                    ChinEngagement = table.Column<int>(nullable: true),
+                    Alertness = table.Column<int>(nullable: true),
+                    Fussiness = table.Column<int>(nullable: true),
+                    FeedSummary = table.Column<int>(nullable: true),
+                    IsDreamFeed = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,13 +91,13 @@ namespace Baby_Tracker.Migrations.ApplicationDb
                 {
                     InterventionId = table.Column<Guid>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    FirstTry = table.Column<int>(nullable: false),
-                    SecondTry = table.Column<int>(nullable: false),
-                    ThirdTry = table.Column<int>(nullable: false),
-                    FourthTry = table.Column<int>(nullable: false),
-                    InterventionSummary = table.Column<int>(nullable: false),
-                    SleepId = table.Column<Guid>(nullable: true)
+                    EndTime = table.Column<DateTime>(nullable: true),
+                    FirstTry = table.Column<int>(nullable: true),
+                    SecondTry = table.Column<int>(nullable: true),
+                    ThirdTry = table.Column<int>(nullable: true),
+                    FourthTry = table.Column<int>(nullable: true),
+                    InterventionSummary = table.Column<int>(nullable: true),
+                    SleepId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

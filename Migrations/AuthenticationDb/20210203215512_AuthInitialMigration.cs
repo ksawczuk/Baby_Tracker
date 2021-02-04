@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Baby_Tracker.Migrations
+namespace Baby_Tracker.Migrations.AuthenticationDb
 {
-    public partial class InitialAuthenticationDb : Migration
+    public partial class AuthInitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace Baby_Tracker.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    BabyId = table.Column<Guid>(nullable: true),
+                    BabyId = table.Column<Guid>(nullable: false),
                     OtherOwnerId1 = table.Column<string>(nullable: true),
                     OtherOwnerId2 = table.Column<string>(nullable: true)
                 },

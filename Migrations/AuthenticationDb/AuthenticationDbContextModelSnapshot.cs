@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Baby_Tracker.Migrations
+namespace Baby_Tracker.Migrations.AuthenticationDb
 {
     [DbContext(typeof(AuthenticationDbContext))]
     partial class AuthenticationDbContextModelSnapshot : ModelSnapshot

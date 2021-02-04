@@ -2,3 +2,12 @@
 
 
 <h1>@Model.Name</h1>
+<h2>Age Months: Months</h2>
+<h2> Age Days: Days</h2>
+
+<div class="btn-group">
+    <p><a class="btn btn-md btn-primary" asp-controller="Feed" asp-action="StartFeed" asp-route-id ="@Model.BabyId" role="button">Start Feeding</a></p>
+    <p><a class="btn btn-md btn-primary" asp-controller="Sleep" asp-action="StartSleep" asp-route-id="@Model.BabyId" role="button">Start Sleeping</a></p>
+</div>
+
+
