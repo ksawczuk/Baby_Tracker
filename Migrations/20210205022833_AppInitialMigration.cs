@@ -15,7 +15,7 @@ namespace Baby_Tracker.Migrations
                     OwnerId1 = table.Column<string>(nullable: false),
                     OwnerId2 = table.Column<string>(nullable: true),
                     OwnerId3 = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Nickname = table.Column<string>(nullable: true),
                     ImageFileName = table.Column<string>(nullable: true),
                     Weight = table.Column<double>(nullable: false),
@@ -96,8 +96,8 @@ namespace Baby_Tracker.Migrations
                     SecondTry = table.Column<int>(nullable: true),
                     ThirdTry = table.Column<int>(nullable: true),
                     FourthTry = table.Column<int>(nullable: true),
-                    InterventionSummary = table.Column<int>(nullable: true),
-                    SleepId = table.Column<Guid>(nullable: false)
+                    InterventionSummary = table.Column<int>(nullable: false),
+                    SleepId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Feed Details";
-    //Layout = "_FeedLayout";
+    Layout = "_BabyLayout";
 }
 
 <h1>Feed Details</h1>
@@ -13,49 +13,69 @@
     <div class="col-md-4">
         <form asp-action="FeedLanding">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="btn-group">
 
-                <div class="form-group">
-                    <div class="btn-group">
-                        <!--<label asp-for="LatchQuality" class="control-label"></label>-->
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                            @Html.DisplayNameFor(model => model.LatchQuality)
-                        </button>
-                       
-                        <select asp-for="LatchQuality" asp-items="@Html.GetEnumSelectList<LatchQuality>()" class="form-control">
-                            <option selected="selected" value=""></option>
-                        </select>
-                        <span asp-validation-for="LatchQuality" class="text-danger"></span>
-                    </div>
+                    
+
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="LatchDrop">
+                        @Html.DisplayNameFor(model => model.LatchQuality)
+                    </button>
+                    <select asp-for="LatchQuality" asp-items="@Html.GetEnumSelectList<LatchQuality>()" class="form-control" id="LatchDrop"></select>    
+                    <span asp-validation-for="LatchQuality" class="text-danger"></span>
+
+
                 </div>
-                <div class="form-group">
-                    <label asp-for="ChinEngagement" class="control-label"></label>
-                    <select asp-for="ChinEngagement" class="form-control"></select>
+
+
+
+
+            </div>
+            <div class="form-group">
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        @Html.DisplayNameFor(model => model.ChinEngagement)
+                    </button>
+
+                    <select asp-for="ChinEngagement" asp-items="@Html.GetEnumSelectList<ChinEngagement>()" class="form-control">
+                        <option selected="selected" value="0"></option>
+                    </select>
                     <span asp-validation-for="ChinEngagement" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Alertness" class="control-label"></label>
-                    <select asp-for="Alertness" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        @Html.DisplayNameFor(model => model.Alertness)
+                    </button>
+                    <select asp-for="Alertness" asp-items="@Html.GetEnumSelectList<Alertness>()" class="form-control">
+                        <option selected="selected" value="0"></option>
+                    </select>
                     <span asp-validation-for="Alertness" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Fussiness" class="control-label"></label>
-                    <select asp-for="Fussiness" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        @Html.DisplayNameFor(model => model.Fussiness)
+                    </button>
+                    <select asp-for="Fussiness" asp-items="@Html.GetEnumSelectList<Fussiness>()" class="form-control">
+                        <option selected="selected" value="0"></option>
+                    </select>
                     <span asp-validation-for="Fussiness" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="FeedSummary" class="control-label"></label>
-                    <select asp-for="FeedSummary" class="form-control"></select>
-                    <span asp-validation-for="FeedSummary" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="End Feed" class="btn btn-primary" />
-                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="End Feed" class="btn btn-secondary" />
+            </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Baby" asp-action="BabyLanding">Back to baby</a>
 </div>
 
 @section Scripts {

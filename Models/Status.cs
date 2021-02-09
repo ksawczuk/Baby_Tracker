@@ -8,6 +8,7 @@ namespace Baby_Tracker.Models
     // A place to store all of our enums
     public enum LatchQuality
     {
+        None,
         Efficient,
         Lazy,
         Average
@@ -15,12 +16,14 @@ namespace Baby_Tracker.Models
 
     public enum ChinEngagement
     {
+        None,
         Engaged,
         Disengaged
     }
 
     public enum Alertness
     {
+        None,
         High,
         Medium,
         Low,
@@ -29,6 +32,7 @@ namespace Baby_Tracker.Models
 
     public enum Fussiness
     {
+        None,
         Calm,
         Irritated,
         Angry,
@@ -37,6 +41,7 @@ namespace Baby_Tracker.Models
 
     public enum Summary
     {
+        None,
         Good,
         OK,
         Poor,
@@ -45,6 +50,7 @@ namespace Baby_Tracker.Models
 
     public enum Sooth
     {
+        None,
         Soother,
         CradleRocking,
         Pickup,

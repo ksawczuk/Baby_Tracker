@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Baby_Tracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210203215031_AppInitialMigration")]
+    [Migration("20210205022833_AppInitialMigration")]
     partial class AppInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

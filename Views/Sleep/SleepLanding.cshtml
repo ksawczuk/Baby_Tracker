@@ -1,0 +1,44 @@
+﻿@model Baby_Tracker.Models.Sleep
+
+@{
+    ViewData["Title"] = "Sleepy Time";
+    Layout = "_BabyLayout";
+}
+
+<h1>Sleep Landing</h1>
+
+<h4>Sleep</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SleepLanding">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SleepId" />
+           
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsNap" /> @Html.DisplayNameFor(model => model.IsNap)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="End Sleep" class="btn btn-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4-md align-items-md-center">
+        <p><a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Dream Feed</a></p>
+    </div>
+    <div class="col-4-md align-items-md-center">
+        <p><a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.BabyId" role="button">Start Intervention</a></p>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

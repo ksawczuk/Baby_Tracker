@@ -20,18 +20,16 @@ namespace Baby_Tracker.Models
         public string ImageFileName { get; set; }
         public double Weight { get; set; }
         public double Height { get; set; }
+        [Display(Name = "Date Added")]
         public DateTime DateAdded { get; set; }
+        [Display(Name = "Birth Date & Time")]
         public DateTime BirthDateTime { get; set; }
+        [Display(Name = "Birth Weight")]
         public double BirthWeight { get; set; }
+        [Display(Name = "Birth Height")]
         public double BirthHeight { get; set; }
         public List<Sleep> Sleeps { get; set; }
         public List<Feed> Feeds { get; set; }
 
-        // Default DateAdded to current date and time.
-
-        public Baby()
-        {
-            DateAdded = DateTime.Now;
-        }
     }
 }
