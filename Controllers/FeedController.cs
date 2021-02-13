@@ -26,7 +26,7 @@ namespace Baby_Tracker.Controllers
         }
         
         // POST 
-        [HttpPost]
+        [HttpPost, ActionName("StartFeed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> StartFeedAsync(Guid id, [Bind("BabyId,IsDreamFeed")] Feed feed)
         {

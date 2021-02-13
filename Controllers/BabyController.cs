@@ -55,9 +55,9 @@ namespace Baby_Tracker.Controllers
         // POST babies/CreateBaby
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("CreateBaby")]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateBaby(Models.Baby baby)
+        public async Task<IActionResult> CreateBabyAsync(Models.Baby baby)
         {
             if (ModelState.IsValid)
             {
@@ -65,15 +65,15 @@ namespace Baby_Tracker.Controllers
                 baby.OwnerId1 = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 baby.DateAdded = DateTime.Now;
                 _db.Baby.Add(baby);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 // grab the current user record from Identity db.
-                var user = _db2.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var user = await _db2.Users.FindAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
                 // update BabyId field in current user record.
                 user.BabyId = baby.BabyId;
                 _db2.Users.Update(user);
-                _db2.SaveChanges();
+                await _db2.SaveChangesAsync();
 
 
                 return RedirectToAction("BabyLanding", "Baby");
@@ -99,16 +99,20 @@ namespace Baby_Tracker.Controllers
             return View(babies);
         }
 
-
+        // Method to get a list of babies from the db baby table where the current user has access rights. 
+        // Can this be handled with an async method?
+        // This should be converted to an IQueryable variable. In this way it won't make a call to the db until an async method such as 
+        // ToListAsync() is called and a collection is created.
         private List<Baby> GetBabies()
         {
             var currentUser = _db2.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            IEnumerable<Baby> babyQuery =
+            IEnumerable<Baby> babyQuery = // this could be an IQueryable.
                  from user_baby in _db.Baby
-                 where user_baby.OwnerId1 == currentUser.Id
+                 where ((user_baby.OwnerId1 == currentUser.Id) | (user_baby.OwnerId2 == currentUser.Id) | (user_baby.OwnerId3 == currentUser.Id))
                  select user_baby;
 
-            List<Baby> baby_list = new List<Baby>();
+            List<Baby> baby_list = new List<Baby>(); // this should be able to be replaced with ToListAsync instead of a foreach to build the collection. 
+                                                     // currently this looks like a mishmash of techniques.
             foreach (Baby user_baby in babyQuery)
             {
                 baby_list.Add(user_baby);

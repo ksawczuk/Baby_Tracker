@@ -3,9 +3,12 @@
     Layout = "_BabyLayout";
 }
 
+@{
+    TimeSpan days = DateTime.Now.Subtract(Model.BirthDateTime);
+}
 <h1>@Model.Name</h1>
-<h2>Age Months: Months</h2>
-<h2> Age Days: Days</h2>
+<h2>Age Months: (@days/365)</h2>
+<h2> Age Days: @days.TotalDays</h2>
 <div class="row">
     <div class="col-4-md align-items-md-center" >
         <p><a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Feeding</a></p>
