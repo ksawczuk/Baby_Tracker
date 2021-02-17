@@ -17,29 +17,36 @@ namespace Baby_Tracker.Data
 
         public DbSet<Baby> Baby { get; set; }
         public DbSet<Sleep> Sleep { get; set; }
+        public DbSet<Intervention> Intervention { get; set; }
         public DbSet<Feed> Feed { get; set; }
+
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         { 
             _httpContextAccessor = httpContextAccessor;
         }
-        
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            // The GlobalQueryFilter below will ensure that db access for baby_db is limited to babies that are associated with their rightful owners.
-            // Need to test this out somehow.
+            // The GlobalQueryFilter below will ensure that db access for baby_db is limited 
+            //to babies that are associated with their rightful owners.
             builder.Entity<Baby>()
                 .HasQueryFilter(
-                    baby_cx => (baby_cx.OwnerId1 == _httpContextAccessor.HttpContext
-                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) || (baby_cx.OwnerId2 == _httpContextAccessor.HttpContext
-                    .User.FindFirstValue(ClaimTypes.NameIdentifier)) || (baby_cx.OwnerId3 == _httpContextAccessor.HttpContext
-                    .User.FindFirstValue(ClaimTypes.NameIdentifier)));
+                    baby_cx => (
+                    baby_cx.OwnerId1 == _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)) 
+                    || (baby_cx.OwnerId2 == _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)) 
+                    || (baby_cx.OwnerId3 == _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
 
+            // Table routing to pass enumerable list of records to controllers and views.
+            // Should show whether or not the GQF above is working as it pulls all records.
+            // If working the GFQ should only show those records associated with UserId.
+            builder.Entity<Baby>().ToTable("Baby");
+            builder.Entity<Sleep>().ToTable("Sleep");
+            builder.Entity<Intervention>().ToTable("Intervention");
+            builder.Entity<Feed>().ToTable("Feed");
         }
-        
-
     }
 }

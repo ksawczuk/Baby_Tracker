@@ -11,8 +11,9 @@ namespace Baby_Tracker.Data
     public class AuthenticationDbContext : IdentityDbContext<BabyUser>
     {
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options)
-            : base(options)
+            : base(options) 
         {
         }
     }
+
 }

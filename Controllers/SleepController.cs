@@ -100,5 +100,87 @@ namespace Baby_Tracker.Controllers
             }
             return View(sleepToUpdate);
         }
+
+        // Need to add Delete and Edit for Sleeps.
+
+        // GET Start Intervention form
+        [HttpGet]
+        public IActionResult StartIntervention()
+        {
+            return View();
+        }
+
+        // POST 
+        [HttpPost, ActionName("StartIntervention")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StartInterventionAsync(Guid id, [Bind("BabyId,SleepId,IsNap")] Intervention intervention)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+
+                intervention.InterventionId = Guid.NewGuid();
+                intervention.SleepId = id;
+                intervention.StartTime = DateTime.Now;
+
+
+                _db.Add(intervention);
+                await _db.SaveChangesAsync();
+
+                return RedirectToAction("InterventionLanding", "Intervention", new RouteValueDictionary(
+                    new { controller = "Sleep", action = "InterventionLanding", id = intervention.InterventionId }));
+            }
+
+            return View();
+        }
+
+        // GET for InterventionLanding
+        [HttpGet]
+        public async Task<IActionResult> InterventionLanding(Guid id)
+        {
+            Intervention intervention = await _db.Intervention.FindAsync(id);
+            return View(intervention);
+        }
+
+        // POST For InterventionLanding. User updates Intervention details and ends intervention.
+        // This all needs to be updated to be intervention specific.
+        //Need to add intervention to Sleep record.
+
+        [HttpPost, ActionName("InterventionLanding")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InterventionLandingPost(Guid? id, [Bind(include: "FirstTry,SecondTry,ThirdTry,FourthTry")] Intervention intervention)
+
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var interventionToUpdate = await _db.Intervention.FirstOrDefaultAsync(i => i.InterventionId == id);
+            interventionToUpdate.EndTime = DateTime.Now;
+
+            if (await TryUpdateModelAsync<Intervention>(
+                interventionToUpdate));
+            {
+                try
+                {
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("SleepLanding", "Sleep", new { id = interventionToUpdate.SleepId });
+                }
+                catch (DbUpdateException /* ex */)
+                {
+                    // Log the error (uncomment ex variable and write a log entry.)
+
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
+                }
+            }
+            return View(interventionToUpdate);
+        }
     }
 }
+

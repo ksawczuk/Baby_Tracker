@@ -1,19 +1,40 @@
-﻿@model IEnumerable<Baby> 
+﻿@model IEnumerable<Baby>
 
-@{ 
-    ViewData["Title"] = "Feed Details";
+@{
+    ViewData["Title"] = "Babies Collection";
     Layout = "_BabyLayout";
 }
 
 
-@foreach (var baby in Model)
-{
-    <p>
-    <h1>@baby.Name</h1>
-    @{
-        var age = DateTime.Now.Subtract(baby.BirthDateTime); 
-    }
-    <h3>@baby.Nickname is @age.TotalDays days old today!</h3>
-    </p>
+<table class="table">
 
-}
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nickname)
+            </th>
+            <th>
+                Age Days
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var baby in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="BabyLanding" asp-route-id=@baby.BabyId><h3>@Html.DisplayFor(modelItem => baby.Name)</h3></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => baby.Nickname)
+                </td>
+                    
+            </tr>
+        }
+
+    </tbody>
+
+</table>

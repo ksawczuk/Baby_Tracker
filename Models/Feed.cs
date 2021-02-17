@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Baby_Tracker.Models
 {
     public class Feed
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid FeedId { get; set; }
         public Guid BabyId { get; set; }
         public Guid? SleepId { get; set; }

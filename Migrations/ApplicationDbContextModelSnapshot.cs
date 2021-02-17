@@ -20,7 +20,6 @@ namespace Baby_Tracker.Migrations
             modelBuilder.Entity("Baby_Tracker.Models.Baby", b =>
                 {
                     b.Property<Guid>("BabyId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("BirthDateTime")
@@ -67,7 +66,6 @@ namespace Baby_Tracker.Migrations
             modelBuilder.Entity("Baby_Tracker.Models.Feed", b =>
                 {
                     b.Property<Guid>("FeedId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<int>("Alertness")
@@ -112,7 +110,6 @@ namespace Baby_Tracker.Migrations
             modelBuilder.Entity("Baby_Tracker.Models.Intervention", b =>
                 {
                     b.Property<Guid>("InterventionId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("EndTime")
@@ -130,7 +127,7 @@ namespace Baby_Tracker.Migrations
                     b.Property<int>("SecondTry")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("SleepId")
+                    b.Property<Guid>("SleepId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("StartTime")
@@ -149,7 +146,6 @@ namespace Baby_Tracker.Migrations
             modelBuilder.Entity("Baby_Tracker.Models.Sleep", b =>
                 {
                     b.Property<Guid>("SleepId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("BabyId")
@@ -191,7 +187,9 @@ namespace Baby_Tracker.Migrations
                 {
                     b.HasOne("Baby_Tracker.Models.Sleep", null)
                         .WithMany("Interventions")
-                        .HasForeignKey("SleepId");
+                        .HasForeignKey("SleepId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Baby_Tracker.Models.Sleep", b =>

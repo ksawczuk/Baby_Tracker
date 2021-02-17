@@ -28,7 +28,7 @@ namespace Baby_Tracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            
             // Add authentication db connection and configure (auth_db)
             services.AddDbContext<AuthenticationDbContext>(options =>
             {
@@ -49,6 +49,9 @@ namespace Baby_Tracker
                 options.EnableSensitiveDataLogging();
             });
             
+            //services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddControllersWithViews();
             services.AddRazorPages();
         }
 

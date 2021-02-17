@@ -1,5 +1,7 @@
 ﻿@using Baby_Tracker.Models
-@{ 
+
+
+@{
     Layout = "_BabyLayout";
 }
 
@@ -9,12 +11,130 @@
 <h1>@Model.Name</h1>
 <h2>Age Months: (@days/365)</h2>
 <h2> Age Days: @days.TotalDays</h2>
+
+<hr />
+<h3>Todays Sleep</h3>
+<hr />
+@{
+    int count = 0;
+    double sleepDuration = 0;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Sleep Count
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                End Time
+            </th>
+            <th>
+                Duration
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Sleep sleep in Model.Sleeps)
+        {
+
+            count++;
+            if (sleep.EndTime != null)
+            {
+                sleepDuration = sleep.EndTime.Subtract(sleep.StartTime).TotalMinutes;
+            }
+            else
+            {
+                sleepDuration = 0;
+            }
+
+
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sleep.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sleep.EndTime)
+                </td>
+                <td>
+                    @sleepDuration
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<h3>Todays Eating</h3>
+<hr />
+@{
+    int feedCount = 0;
+    double feedDuration = 0;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Feed Count
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                End Time
+            </th>
+            <th>
+                Duration
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Feed feed in Model.Feeds)
+        {
+
+            feedCount++;
+            if (feed.EndTime != null)
+            {
+                feedDuration = feed.EndTime.Subtract(feed.StartTime).TotalMinutes;
+            }
+            else
+            {
+                feedDuration = 0;
+            }
+
+
+            <tr>
+                <td>
+                    @feedCount
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feed.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => feed.EndTime)
+                </td>
+                <td>
+                    @feedDuration
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 <div class="row">
-    <div class="col-4-md align-items-md-center" >
-        <p><a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Feeding</a></p>
+    <div class="col-3-md">
+        <div class"mr-2">
+            <a class="btn btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Feeding</a>
+        </div>
     </div>
-    <div class="col-4-md align-items-md-center">
-        <p><a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartSleep" asp-route-id="@Model.BabyId" role="button">Start Sleeping</a></p>
+
+    <div class="col-3-md">
+        <div class="ml-2">
+            <a class="btn btn-secondary" asp-controller="Sleep" asp-action="StartSleep" asp-route-id="@Model.BabyId" role="button">Start Sleeping</a>
+        </div>
     </div>
 </div>
 

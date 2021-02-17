@@ -25,9 +25,6 @@ namespace Baby_Tracker.Migrations.AuthenticationDb
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("BabyId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -53,11 +50,11 @@ namespace Baby_Tracker.Migrations.AuthenticationDb
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
 
-                    b.Property<string>("OtherOwnerId1")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<Guid>("OtherOwnerId1")
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("OtherOwnerId2")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<Guid>("OtherOwnerId2")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

@@ -75,7 +75,7 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
 
-            returnUrl = returnUrl ?? Url.Content("~/Baby/Index");
+            returnUrl = returnUrl ?? Url.Content("~/Baby/BabiesLanding");
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -85,7 +85,7 @@ namespace Baby_Tracker.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {                
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Index", "Baby");
+                    return RedirectToAction("BabiesLanding", "Baby");
                 }
                 if (result.RequiresTwoFactor)
                 {

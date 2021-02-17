@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Baby_Tracker.Models
 {
@@ -11,6 +12,7 @@ namespace Baby_Tracker.Models
     // Standard class for Baby
     public class Baby
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid BabyId { get; set; }
         public string OwnerId1 { get; set; }
         public string OwnerId2 { get; set; }
@@ -28,8 +30,8 @@ namespace Baby_Tracker.Models
         public double BirthWeight { get; set; }
         [Display(Name = "Birth Height")]
         public double BirthHeight { get; set; }
-        public List<Sleep> Sleeps { get; set; }
-        public List<Feed> Feeds { get; set; }
+        public ICollection<Sleep> Sleeps { get; set; }
+        public ICollection<Feed> Feeds { get; set; }
 
     }
 }

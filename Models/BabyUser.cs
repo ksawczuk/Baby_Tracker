@@ -9,10 +9,8 @@ namespace Baby_Tracker.Models
     public class BabyUser : IdentityUser
     {
         [PersonalData]
-        public Guid BabyId { get; set; }
+        public Guid OtherOwnerId1 { get; set; }
         [PersonalData]
-        public string OtherOwnerId1 { get; set; }
-        [PersonalData]
-        public string OtherOwnerId2 { get; set; }
+        public Guid OtherOwnerId2 { get; set; }
     }
 }
