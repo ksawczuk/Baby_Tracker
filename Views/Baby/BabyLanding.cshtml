@@ -1,4 +1,5 @@
 ﻿@using Baby_Tracker.Models
+@using System.Collections.Generic 
 
 
 @{
@@ -7,135 +8,252 @@
 
 @{
     TimeSpan days = DateTime.Now.Subtract(Model.BirthDateTime);
+
+    /*
+    var monthNames = new Dictionary<int, string>()  {
+    [1] { "January" },
+    [2] {"February" },
+    [3] { "March" },
+    [4] { "April" },
+    [5] { "May" },
+    [6] { "June" },
+    [7] { "July" },
+    [8] { "August" },
+    [9] { "September" },
+    [10] { "October" },
+    [11] { "November" },
+    [12] { "December" }
+    };
+    */
 }
-<h1>@Model.Name</h1>
-<h2>Age Months: (@days/365)</h2>
-<h2> Age Days: @days.TotalDays</h2>
+<h2 class="text-secondary">@Model.Name</h2>
+<h4>@days.TotalDays days old</h4>
 
-<hr />
-<h3>Todays Sleep</h3>
-<hr />
-@{
-    int count = 0;
-    double sleepDuration = 0;
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Sleep Count
-            </th>
-            <th>
-                Start Time
-            </th>
-            <th>
-                End Time
-            </th>
-            <th>
-                Duration
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Sleep sleep in Model.Sleeps)
-        {
-
-            count++;
-            if (sleep.EndTime != null)
-            {
-                sleepDuration = sleep.EndTime.Subtract(sleep.StartTime).TotalMinutes;
-            }
-            else
-            {
-                sleepDuration = 0;
-            }
-
-
-            <tr>
-                <td>
-                    @count
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => sleep.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => sleep.EndTime)
-                </td>
-                <td>
-                    @sleepDuration
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<hr />
-<h3>Todays Eating</h3>
-<hr />
-@{
-    int feedCount = 0;
-    double feedDuration = 0;
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Feed Count
-            </th>
-            <th>
-                Start Time
-            </th>
-            <th>
-                End Time
-            </th>
-            <th>
-                Duration
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Feed feed in Model.Feeds)
-        {
-
-            feedCount++;
-            if (feed.EndTime != null)
-            {
-                feedDuration = feed.EndTime.Subtract(feed.StartTime).TotalMinutes;
-            }
-            else
-            {
-                feedDuration = 0;
-            }
-
-
-            <tr>
-                <td>
-                    @feedCount
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => feed.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => feed.EndTime)
-                </td>
-                <td>
-                    @feedDuration
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="pt-3"></div>
 <div class="row">
-    <div class="col-3-md">
-        <div class"mr-2">
+    <div class="pl-2"></div>
+    <div class="col-6-md">
+        <div class"mr-4 pb-3">
             <a class="btn btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Feeding</a>
         </div>
     </div>
-
-    <div class="col-3-md">
-        <div class="ml-2">
+    <div class="col-6-md">
+        <div class="pl-4 pb-3">
             <a class="btn btn-secondary" asp-controller="Sleep" asp-action="StartSleep" asp-route-id="@Model.BabyId" role="button">Start Sleeping</a>
         </div>
     </div>
 </div>
+
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h4>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Sleeps
+                </button>
+            </h4>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                @{
+                    int count = 0;
+                    double sleepDuration = 0;
+                }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Sleep Count
+                            </th>
+                            <th>
+                                Start Time
+                            </th>
+                            <th>
+                                End Time
+                            </th>
+                            <th>
+                                Duration
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Sleep sleep in Model.Sleeps)
+                        {
+                            count++;
+                            if (sleep.EndTime == DateTime.MinValue)
+                            {
+                                sleepDuration = 0;
+                            }
+                            else
+                            {
+                                sleepDuration = sleep.EndTime.Subtract(sleep.StartTime).TotalMinutes;
+                                if ( sleepDuration > 60)
+                                {
+                                    sleepDuration = sleepDuration / 60;
+                                }
+                            }
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => sleep.StartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => sleep.EndTime)
+                                </td>
+                                <td>
+                                    @sleepDuration
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @{ 
+        string dateToday = DateTime.Now.Day.ToString();
+        int monthToday = DateTime.Now.Month;
+        string monthNameToday = null;
+
+        switch (monthToday)
+        {
+            case 1:
+                monthNameToday = "January";
+                break;
+            case 2:
+                monthNameToday = "February";
+                break;
+            case 3:
+                monthNameToday = "March";
+                break;
+            case 4:
+                monthNameToday = "April";
+                break;
+            case 5:
+                monthNameToday = "May";
+                break;
+            case 6:
+                monthNameToday = "June";
+                break;
+            case 7:
+                monthNameToday = "July";
+                break;
+            case 8:
+                monthNameToday = "August";
+                break;
+            case 9:
+                monthNameToday = "September";
+                break;
+            case 10:
+                monthNameToday = "October";
+                break;
+            case 11:
+                monthNameToday = "November";
+                break;
+            case 12:
+                monthNameToday = "December";
+                break;
+            default :
+                monthNameToday = "Error";
+                break;
+        }
+    }
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h4>Feeds @dateToday, @monthNameToday</h4>
+            </button>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                @{
+                    int feedCount = 0;
+                    double feedDuration = 0;
+                    int feedView = 0;
+                }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Feed Count
+                            </th>
+                            <th>
+                                Start Time
+                            </th>
+                            <th>
+                                End Time
+                            </th>
+                            <th>
+                                Duration
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach (Feed feed in Model.Feeds)
+                        {
+                            feedCount++;
+                            string tempStartTime = feed.StartTime.ToShortTimeString();
+                            string tempEndTime = feed.EndTime.ToShortTimeString();
+                            if (feed.EndTime == DateTime.MinValue)
+                            {
+                                feedDuration = 0;
+                                feedView = 1;
+                            }
+                            else
+                            {   
+                                feedDuration = feed.EndTime.Subtract(feed.StartTime).TotalMinutes;
+                                feedView = 0;
+                            }
+                            if (feedView == 0)
+                            {
+                                <tr>
+                                    <td>
+                                        @feedCount
+                                    </td>
+                                    <td>
+                                        @tempStartTime
+                                    </td>
+                                    <td>
+                                        @tempEndTime
+                                    </td>
+                                    <td>
+                                        @feedDuration
+                                    </td>
+                                </tr>
+                            }
+
+                            if (feedView == 1)
+                            {
+                                <tr>
+                                    <td>
+                                        @feedCount
+                                    </td>
+                                    <td>
+                                        @tempStartTime
+                                    </td>
+                                    <td>
+                                        -
+                                    </td>
+                                    <td>
+                                        @feedDuration
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
 
 

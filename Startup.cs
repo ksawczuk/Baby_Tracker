@@ -1,5 +1,6 @@
 using Baby_Tracker.Data;
 using Baby_Tracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +29,7 @@ namespace Baby_Tracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             // Add authentication db connection and configure (auth_db)
             services.AddDbContext<AuthenticationDbContext>(options =>
             {
@@ -48,11 +49,17 @@ namespace Baby_Tracker
                 // Enable logging to check httpcontext setup for EF Global Query Filtering.
                 options.EnableSensitiveDataLogging();
             });
-            
-            //services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

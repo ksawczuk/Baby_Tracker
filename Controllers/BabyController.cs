@@ -21,11 +21,12 @@ namespace Baby_Tracker.Controllers
             _db = db;
             _db2 = db2;
         }
-        public IActionResult Index()
+        [HttpGet, ActionName("Index")]
+
+        public async Task<IActionResult> IndexAsync()
         {
-            /*
             List<Baby> baby_list;
-            baby_list = GetBabies();
+            baby_list = await _db.Baby.ToListAsync();
 
             if (baby_list.Count == 0)
             {
@@ -34,18 +35,18 @@ namespace Baby_Tracker.Controllers
 
             else if (baby_list.Count == 1)
             {
-                return RedirectToAction("BabyLanding", "Baby");
+                return RedirectToAction("BabyLanding", "Baby", new { id=baby_list[0].BabyId});
             }
             
             else if (baby_list.Count > 1)
             {
-                return RedirectToAction("BabiesLanding", "Baby");
+                return RedirectToAction("BabiesLanding", "Baby", baby_list);
             }
             else
             {
                 
             }
-            */
+    
             return RedirectToAction("Index", "Home");
         }
 
@@ -70,43 +71,37 @@ namespace Baby_Tracker.Controllers
                 _db.Baby.Add(baby);
                 await _db.SaveChangesAsync();
 
-                return RedirectToAction("BabyLanding", "Baby");
+                return RedirectToAction("BabyLanding", "Baby", new { id = baby.BabyId });
             }
 
             return RedirectToAction();
         }
     
 
-        public async Task<IActionResult> BabyLanding(Guid? id)
+        public async Task<IActionResult> BabyLandingAsync(Guid? id)
         {
             
             if (id == null)
             {
                 return NotFound();
             }
-            var baby = await _db.Baby
-                .Include(s => s.Sleeps)
-                .ThenInclude(i => i.Interventions)
-                .Include(f => f.Feeds)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(b => b.BabyId == id);
-            /*
-            var babies = await _db.Baby.ToListAsync();
-            if (id == null)
+            try
             {
-                babies[0].BabyId;
-                return View(babies[0]);
+                var baby = await _db.Baby
+                   .Include(s => s.Sleeps)
+                   .ThenInclude(i => i.Interventions)
+                   .Include(f => f.Feeds)
+                   .AsNoTracking()
+                   .FirstOrDefaultAsync(b => b.BabyId == id);
+                    return View(baby); 
             }
-            var babySearch = babies.Where(b => b.BabyId == id);
+            catch
+            {
+                RedirectToAction("Error", "Home", new { message = "Error locating associated babies, have you created one?" });
+            }
 
-            foreach (Baby baby in babySearch)
-            {
-                Baby babe = baby;
-                return View(babe);
-            }
-                
-            */
-            return View(baby);
+            return NotFound();
+            
         }
 
         public async Task<IActionResult> BabiesLanding()

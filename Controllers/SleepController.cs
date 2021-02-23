@@ -21,8 +21,10 @@ namespace Baby_Tracker.Controllers
 
         // GET
         [HttpGet]
-        public IActionResult StartSleep()
+        public IActionResult StartSleep(Guid id)
         {
+
+            ViewData["BabyId"] = id;
             return View();
         }
 
@@ -58,8 +60,9 @@ namespace Baby_Tracker.Controllers
 
         // GET for SleepLanding
         [HttpGet]
-        public async Task<IActionResult> SleepLanding(Guid id)
+        public async Task<IActionResult> SleepLanding(Guid id, Guid? babyId)
         {
+            ViewData["BabyId"] = babyId;
             Sleep sleep = await _db.Sleep.FindAsync(id);
             return View(sleep);
         }
@@ -105,8 +108,9 @@ namespace Baby_Tracker.Controllers
 
         // GET Start Intervention form
         [HttpGet]
-        public IActionResult StartIntervention()
+        public IActionResult StartIntervention(Guid id)
         {
+            ViewData["SleepId"] = id;
             return View();
         }
 
@@ -131,7 +135,7 @@ namespace Baby_Tracker.Controllers
                 _db.Add(intervention);
                 await _db.SaveChangesAsync();
 
-                return RedirectToAction("InterventionLanding", "Intervention", new RouteValueDictionary(
+                return RedirectToAction("InterventionLanding", "Sleep", new RouteValueDictionary(
                     new { controller = "Sleep", action = "InterventionLanding", id = intervention.InterventionId }));
             }
 
@@ -163,7 +167,7 @@ namespace Baby_Tracker.Controllers
             interventionToUpdate.EndTime = DateTime.Now;
 
             if (await TryUpdateModelAsync<Intervention>(
-                interventionToUpdate));
+                interventionToUpdate))
             {
                 try
                 {

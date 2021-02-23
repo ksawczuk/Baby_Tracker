@@ -14,58 +14,24 @@
         <form asp-action="FeedLanding">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <div class="btn-group">
-
-                    
-
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="LatchDrop">
-                        @Html.DisplayNameFor(model => model.LatchQuality)
-                    </button>
-                    <select asp-for="LatchQuality" asp-items="@Html.GetEnumSelectList<LatchQuality>()" class="form-control" id="LatchDrop"></select>    
-                    <span asp-validation-for="LatchQuality" class="text-danger"></span>
-
-
-                </div>
-
-
-
-
+                <label asp-for="LatchQuality" class="control-label" id="LatchDrop">@Html.DisplayNameFor(model => model.LatchQuality)</label>            
+                <select asp-for="LatchQuality" asp-items="@Html.GetEnumSelectList<LatchQuality>()" class="form-control" id="LatchDrop"></select>    
+                <span asp-validation-for="LatchQuality" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                        @Html.DisplayNameFor(model => model.ChinEngagement)
-                    </button>
-
-                    <select asp-for="ChinEngagement" asp-items="@Html.GetEnumSelectList<ChinEngagement>()" class="form-control">
-                        <option selected="selected" value="0"></option>
-                    </select>
-                    <span asp-validation-for="ChinEngagement" class="text-danger"></span>
-                </div>
+                <label asp-for="ChinEngagement" class="control-label" id="ChinDrop">@Html.DisplayNameFor(model => model.ChinEngagement)</label>
+                <select asp-for="ChinEngagement" asp-items="@Html.GetEnumSelectList<ChinEngagement>()" class="form-control" id="ChinDrop"></select>
+                <span asp-validation-for="ChinEngagement" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                        @Html.DisplayNameFor(model => model.Alertness)
-                    </button>
-                    <select asp-for="Alertness" asp-items="@Html.GetEnumSelectList<Alertness>()" class="form-control">
-                        <option selected="selected" value="0"></option>
-                    </select>
-                    <span asp-validation-for="Alertness" class="text-danger"></span>
-                </div>
+                <label asp-for="Alertness" class="control-label" id="AlertDrop">@Html.DisplayNameFor(model => model.Alertness)</label>
+                <select asp-for="Alertness" asp-items="@Html.GetEnumSelectList<Alertness>()" class="form-control" id="AlertDrop"></select>
+                <span asp-validation-for="Alertness" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                        @Html.DisplayNameFor(model => model.Fussiness)
-                    </button>
-                    <select asp-for="Fussiness" asp-items="@Html.GetEnumSelectList<Fussiness>()" class="form-control">
-                        <option selected="selected" value="0"></option>
-                    </select>
-                    <span asp-validation-for="Fussiness" class="text-danger"></span>
-                </div>
+                <label asp-for="Fussiness" class="control-label" id="FussyDrop">@Html.DisplayNameFor(model => model.Fussiness)</label>
+                <select asp-for="Fussiness" asp-items="@Html.GetEnumSelectList<Fussiness>()" class="form-control" id="FussyDrop"></select>
+                <span asp-validation-for="Fussiness" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="End Feed" class="btn btn-secondary" />
@@ -75,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-controller="Baby" asp-action="BabyLanding">Back to baby</a>
+    <a asp-action="BabiesLanding" asp-controller="Baby">Back to Babies Page</a>
 </div>
 
 @section Scripts {

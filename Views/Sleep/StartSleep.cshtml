@@ -5,17 +5,16 @@
     Layout = "_BabyLayout";
 }
 
-<h1>StartSleepAsync</h1>
+<h4>Start Sleep</h4>
 
-<h4>Sleep</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="StartSleep">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
-                <div class="btn-group-toggle btn-secondary" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
                         <input type="checkbox" checked autocomplete="off" asp-for="IsNap"> @Html.DisplayNameFor(model => model.IsNap)
                     </label>
                 </div>
@@ -28,7 +27,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Baby" asp-action="BabyLanding" asp-route-id="@ViewData["BabyId"]">Back to Baby Page </a>
 </div>
 
 @section Scripts {

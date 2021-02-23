@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,13 +53,16 @@ namespace Baby_Tracker.Models
     {
         None,
         Soother,
+        [Display(Name="Cradle Rocking")]
         CradleRocking,
         Pickup,
         Rocking,
         Shushing,
         Singing,
+        [Display(Name="White Noise")]
         WhiteNoise,
         Burping,
+        [Display(Name ="Over Knee")]
         OverKnee
     }
 }

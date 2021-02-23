@@ -28,7 +28,7 @@ namespace Baby_Tracker.Controllers
         // POST 
         [HttpPost, ActionName("StartFeed")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> StartFeedAsync(Guid id, [Bind("BabyId,IsDreamFeed")] Feed feed)
+        public async Task<IActionResult> StartFeedAsync(Guid id, Guid? sleepId, [Bind("BabyId,IsDreamFeed")] Feed feed)
         {
             
             if (id == null)
@@ -41,15 +41,24 @@ namespace Baby_Tracker.Controllers
                 feed.FeedId = Guid.NewGuid();
                 feed.BabyId = id;
                 feed.StartTime = DateTime.Now;
+                if (feed.IsDreamFeed)
+                {
+                    feed.SleepId = sleepId;
+                }
             
 
                 _db.Add(feed);
                 await _db.SaveChangesAsync();
-
-                return RedirectToAction("FeedLanding", "Feed", new RouteValueDictionary(
+                if (feed.IsDreamFeed)
+                {
+                    return RedirectToAction("FeedLanding", "Feed", new RouteValueDictionary(
+                    new { controller = "Feed", action = "FeedLanding", id = feed.FeedId, sleepId = feed.SleepId }));
+                }
+                else
+                {
+                    return RedirectToAction("FeedLanding", "Feed", new RouteValueDictionary(
                     new { controller = "Feed", action = "FeedLanding", id = feed.FeedId }));
-
-                //new { id = feed.FeedId }
+                }
             }
 
             return View();
@@ -57,7 +66,7 @@ namespace Baby_Tracker.Controllers
 
         // GET for FeedLanding
         [HttpGet]
-        public async Task<IActionResult> FeedLanding(Guid id)
+        public async Task<IActionResult> FeedLanding(Guid id, Guid? sleepId)
         {
             Feed feed = await _db.Feed.FindAsync(id);
             return View(feed);
@@ -89,7 +98,15 @@ namespace Baby_Tracker.Controllers
                 try
                 {
                     await _db.SaveChangesAsync();
-                    return RedirectToAction("BabyLanding", "Baby", new { id = feedToUpdate.BabyId });
+                    if (feedToUpdate.IsDreamFeed)
+                    {
+                        return RedirectToAction("SleepLanding", "Sleep", new { id = feedToUpdate.SleepId, babyId = feedToUpdate.BabyId });
+                    }
+                    else
+                    {
+                        return RedirectToAction("BabyLanding", "Baby", new { id = feedToUpdate.BabyId });
+                    }
+                    
                 }
                 catch (DbUpdateException /* ex */)
                 {

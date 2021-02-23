@@ -5,9 +5,8 @@
     Layout = "_BabyLayout";
 }
 
-<h1>Sleep Landing</h1>
+<h4>Sleep Details</h4>
 
-<h4>Sleep</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -27,16 +26,21 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-4-md align-items-md-center">
-        <p><a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@Model.BabyId" role="button">Start Dream Feed</a></p>
+    <div class="pl-3"></div>
+    <div class="col-4-md">
+        <div class="mr-2">
+            <a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@ViewData["BabyId"]" role="button">Dream Feed</a>
+        </div>
     </div>
-    <div class="col-4-md align-items-md-center">
-        <p><a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Start Intervention</a></p>
+    <div class="col-4-md">
+        <div class="ml-2">
+        <a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Intervention</a>
+        </div>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Baby" asp-action="BabyLanding" asp-route-id="@Model.BabyId">Back to Baby Page</a>
 </div>
 
 @section Scripts {
