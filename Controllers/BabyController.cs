@@ -21,8 +21,8 @@ namespace Baby_Tracker.Controllers
             _db = db;
             _db2 = db2;
         }
-        [HttpGet, ActionName("Index")]
 
+        [HttpGet, ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
             List<Baby> baby_list;
