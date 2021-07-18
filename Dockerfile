@@ -19,4 +19,7 @@ RUN dotnet publish "Baby_Tracker.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN groupadd --gid 1002 baby && \
+    useradd -r -N -u 1003 -g baby baby
+USER baby
 ENTRYPOINT ["dotnet", "Baby_Tracker.dll"]
