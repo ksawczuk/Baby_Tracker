@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Baby_Tracker.Models
 {
+    // This class might not be needed (comment as of 07/20/2021)
     public class BabyUser : IdentityUser
     {
         [PersonalData]

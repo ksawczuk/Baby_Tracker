@@ -13,10 +13,9 @@
         <form asp-action="StartSleep">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary">
-                        <input type="checkbox" checked autocomplete="off" asp-for="IsNap"> @Html.DisplayNameFor(model => model.IsNap)
-                    </label>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="IsNap">
+                    <label class="custom-control-label" for="customSwitch1">@Html.DisplayNameFor(model => model.IsNap)</label>
                 </div>
             </div>
             <div class="form-group">

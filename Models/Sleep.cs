@@ -11,8 +11,15 @@ namespace Baby_Tracker.Models
         public Guid SleepId { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid BabyId { get; set; }
+
+        
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{YYYY-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
+        
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{YYYY-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 
@@ -20,9 +27,9 @@ namespace Baby_Tracker.Models
         public Summary SleepSummary { get; set; }
         [Display(Name = "Nap?")]
         public bool IsNap { get; set; }
-
+        [Display(Name = "Sleep interventions")]
         public ICollection<Intervention> Interventions { get; set; }
-        [Display(Name = "Sleep Feeds")]
+        [Display(Name = "Feeds during night time sleep.")]
         public ICollection<Feed> SleepFeeds { get; set; }
 
     }

@@ -19,36 +19,46 @@ namespace Baby_Tracker.Controllers
             _db = db;
         }
                 
-        // GET
-        public IActionResult StartFeed()
+        // GET Start Feed event.
+        public IActionResult StartFeed(Guid babyId, Guid? sleepId)
         {
+            
+            if(sleepId != null)
+            {
+                return RedirectToAction("StartFeedPost", "Feed", new RouteValueDictionary(
+                    new {controller="Feed", action="StartFeedPost", babyId = babyId, sleepId=sleepId }));
+            }
+            
+
             return View();
         }
         
-        // POST 
-        [HttpPost, ActionName("StartFeed")]
+        // POST Feed event.
+        [HttpPost, ActionName("StartFeedPost")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> StartFeedAsync(Guid id, Guid? sleepId, [Bind("BabyId,IsDreamFeed")] Feed feed)
+        public async Task<IActionResult> StartFeedAsync(Guid babyId, Guid? sleepId, [Bind("BabyId,IsDreamFeed")] Feed feed)
         {
             
-            if (id == null)
+            if (babyId == null)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
 
-                feed.FeedId = Guid.NewGuid();
-                feed.BabyId = id;
+                feed.FeedId = babyId;
                 feed.StartTime = DateTime.Now;
-                if (feed.IsDreamFeed)
+
+                if (sleepId != null)
                 {
+                    feed.IsDreamFeed = true;
                     feed.SleepId = sleepId;
                 }
             
 
                 _db.Add(feed);
                 await _db.SaveChangesAsync();
+
                 if (feed.IsDreamFeed)
                 {
                     return RedirectToAction("FeedLanding", "Feed", new RouteValueDictionary(
@@ -64,18 +74,19 @@ namespace Baby_Tracker.Controllers
             return View();
         }
 
-        // GET for FeedLanding
+        // GET for FeedLanding 
         [HttpGet]
         public async Task<IActionResult> FeedLanding(Guid id, Guid? sleepId)
         {
             Feed feed = await _db.Feed.FindAsync(id);
+
             return View(feed);
         }
 
         // POST For FeedLanding. User updates Feed details and ends feed.
         [HttpPost, ActionName("FeedLanding")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FeedLandingPost(Guid? id, [Bind(include: "LatchQuality,ChinEngagement,Alertness,Fussiness")] Feed feed)
+        public async Task<IActionResult> FeedLandingPost(Guid? id, string sleepId, [Bind(include: "LatchQuality,ChinEngagement,Alertness,Fussiness")] Feed feed)
 
         {
             if (id == null)
@@ -89,6 +100,10 @@ namespace Baby_Tracker.Controllers
             feedToUpdate.ChinEngagement = feed.ChinEngagement;
             feedToUpdate.Alertness = feed.Alertness;
             feedToUpdate.Fussiness = feed.Fussiness;
+            if (sleepId != null)
+            {
+                feedToUpdate.SleepId = Guid.Parse(sleepId);
+            }
 
             if (await TryUpdateModelAsync<Feed>(
                 feedToUpdate,

@@ -26,15 +26,20 @@
     </div>
 </div>
 <div class="row">
+    <!--
     <div class="pl-3"></div>
     <div class="col-4-md">
         <div class="mr-2">
-            <a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@ViewData["BabyId"]" role="button">Dream Feed</a>
+            <a class="btn btn-md btn-secondary" asp-controller="Feed"
+               asp-action="StartFeed" asp-route-babyId="@Model.BabyId"
+               asp-route-sleepId="@Model.SleepId"
+               role="button">Dream Feed</a>
         </div>
     </div>
+     -->
     <div class="col-4-md">
         <div class="ml-2">
-        <a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Intervention</a>
+            <a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Intervention</a>
         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@ namespace Baby_Tracker.Controllers
 {
     public class SleepController : Controller
     {
+        // Dependecy Injection for baby_db CRUD ops. 
         private readonly ApplicationDbContext _db;
 
         public SleepController(ApplicationDbContext db)
@@ -19,7 +20,7 @@ namespace Baby_Tracker.Controllers
             _db = db;
         }
 
-        // GET
+        // GET Start sleep event. babyId passed with Action.
         [HttpGet]
         public IActionResult StartSleep(Guid id)
         {
@@ -28,16 +29,18 @@ namespace Baby_Tracker.Controllers
             return View();
         }
 
-        // POST 
+        // POST Start sleep event.
         [HttpPost, ActionName("StartSleep")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> StartSleepAsync(Guid id, [Bind("BabyId,IsNap")] Sleep sleep)
+        public async Task<IActionResult> StartSleepAsync(Guid id, [Bind("BabyId")] Sleep sleep)
         {
-
+            // if no id passed.
             if (id == null)
             {
                 return NotFound();
             }
+
+            // ModelState as per ValidateAntiForgeryToken
             if (ModelState.IsValid)
             {
 
@@ -45,14 +48,14 @@ namespace Baby_Tracker.Controllers
                 sleep.BabyId = id;
                 sleep.StartTime = DateTime.Now;
 
-
+                // prep data for db write.
                 _db.Add(sleep);
+                // write data to the db.
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction("SleepLanding", "Sleep", new RouteValueDictionary(
-                    new { controller = "Sleep", action = "SleepLanding", id = sleep.SleepId }));
+                    new { controller = "Sleep", action = "SleepLanding", sleepId = sleep.SleepId, babyId = sleep.BabyId }));
 
-                //new { id = sleep.SleepId }
             }
 
             return View();
@@ -60,23 +63,28 @@ namespace Baby_Tracker.Controllers
 
         // GET for SleepLanding
         [HttpGet]
-        public async Task<IActionResult> SleepLanding(Guid id, Guid? babyId)
+        public async Task<IActionResult> SleepLanding(Guid sleepId, Guid babyId)
         {
+            // pass in babyId via ViewData as the model in view is used for sleep data.
             ViewData["BabyId"] = babyId;
-            Sleep sleep = await _db.Sleep.FindAsync(id);
+            
+            // connect to db and locate the sleep event record.
+            Sleep sleep = await _db.Sleep.FindAsync(sleepId);  // This is where you want to have an include for Feed table for Dream Feeds.
             return View(sleep);
         }
 
-        // POST For FeedLanding. User updates Feed details and ends feed.
+        // POST For SleepLanding. User updates sleep details and ends event.
         [HttpPost, ActionName("SleepLanding")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SleepLandingPost(Guid? id, [Bind(include: "Interventions,SleepFeeds")] Sleep sleep)
 
         {
+            // if no id passed
             if (id == null)
             {
                 return NotFound();
             }
+            // prep 
             var sleepToUpdate = await _db.Sleep.FirstOrDefaultAsync(s => s.SleepId == id);
             sleepToUpdate.EndTime = DateTime.Now;
             sleepToUpdate.Interventions = sleep.Interventions;
@@ -97,8 +105,7 @@ namespace Baby_Tracker.Controllers
                     // Log the error (uncomment ex variable and write a log entry.)
 
                     ModelState.AddModelError("", "Unable to save changes. " +
-                        "Try again, and if the problem persists, " +
-                        "see your system administrator.");
+                        "Try again, later.");
                 }
             }
             return View(sleepToUpdate);
@@ -114,7 +121,7 @@ namespace Baby_Tracker.Controllers
             return View();
         }
 
-        // POST 
+        // POST Start Intervention
         [HttpPost, ActionName("StartIntervention")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> StartInterventionAsync(Guid id, [Bind("BabyId,SleepId,IsNap")] Intervention intervention)
@@ -157,7 +164,6 @@ namespace Baby_Tracker.Controllers
         [HttpPost, ActionName("InterventionLanding")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InterventionLandingPost(Guid? id, [Bind(include: "FirstTry,SecondTry,ThirdTry,FourthTry")] Intervention intervention)
-
         {
             if (id == null)
             {
