@@ -5,39 +5,49 @@
     Layout = "_BabyLayout";
 }
 
-<h4>Sleep Details</h4>
 
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="SleepLanding">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SleepId" />
-           
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsNap" /> @Html.DisplayNameFor(model => model.IsNap)
-                </label>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h4>Sleep Details</h4>
+        <hr />
+        <div class="card bg-info text-white">
+            <div class="card-header">
+                <div class="card-columns">
+                    <div class="card bg-dark text-white m-3">
+                        <div class="card-title text-lg-center p-2"><strong>Hungry</strong></div>
+                        <div class="card-body text-center">
+                            <a class="btn btn-sm btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@ViewData["BabyId"]" role="button">Feed</a>
+                        </div>
+                    </div>
+                    <div class="card bg-dark text-white m-3">
+                        <div class="card-title text-lg-center p-2"><strong>Fussing</strong></div>
+                        <div class="card-body text-center">
+                            <a class="btn btn-sm btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Intervention</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="End Sleep" class="btn btn-secondary" />
+            <div class="card-body">
+                <form asp-action="SleepLanding">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="SleepId" />
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="IsNap" />
+                            <label class="custom-control-label" for="customSwitch1">@Html.DisplayNameFor(model => model.IsNap)</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="End Sleep" class="btn btn-secondary" />
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
-<div class="row">
-    <div class="pl-3"></div>
-    <div class="col-4-md">
-        <div class="mr-2">
-            <a class="btn btn-md btn-secondary" asp-controller="Feed" asp-action="StartFeed" asp-route-id="@ViewData["BabyId"]" role="button">Dream Feed</a>
         </div>
     </div>
-    <div class="col-4-md">
-        <div class="ml-2">
-        <a class="btn btn-md btn-secondary" asp-controller="Sleep" asp-action="StartIntervention" asp-route-id="@Model.SleepId" role="button">Intervention</a>
-        </div>
-    </div>
+    <div class="col-md-2"></div>
 </div>
+
 
 <div>
     <a asp-controller="Baby" asp-action="BabyLanding" asp-route-id="@Model.BabyId">Back to Baby Page</a>
