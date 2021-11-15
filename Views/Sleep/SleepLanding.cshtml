@@ -32,7 +32,7 @@
                 <form asp-action="SleepLanding">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="SleepId" />
-                    <div class="form-group">
+                    <div class="form-control">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="IsNap" />
                             <label class="custom-control-label" for="customSwitch1">@Html.DisplayNameFor(model => model.IsNap)</label>
@@ -47,7 +47,6 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-
 
 <div>
     <a asp-controller="Baby" asp-action="BabyLanding" asp-route-id="@Model.BabyId">Back to Baby Page</a>

@@ -5,15 +5,20 @@
     Layout = "_babyLayout";
 }
 
-<h4>Intervention</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="StartIntervention">
-            <div class="form-group">
-                <input type="submit" value="Start Intervention" class="btn btn-secondary" />
-            </div>
-        </form>
+        <h4>Intervention</h4>
+        <hr />
+        <div class="card bg-dark text-white m-4">
+            <div class="card-title text-lg m-2"><strong>How did you help baby sleep?</strong></div>
+            <form asp-action="StartIntervention">
+                <div class="p-4">
+                    <div class="form-group">
+                        <input type="submit" value="Start Intervention" class="btn btn-secondary" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

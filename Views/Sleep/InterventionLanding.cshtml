@@ -12,33 +12,37 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="InterventionLanding">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="card bg-dark text-white">
+            <div class="p-4">
+                <form asp-action="InterventionLanding">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="FirstTry" class="control-label text-secondary" id="FirstDrop">@Html.DisplayNameFor(model => model.FirstTry)</label>
-                <select asp-for="FirstTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="FirstDrop"></select>
-                <span asp-validation-for="FirstTry" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="FirstTry" class="control-label text-secondary" id="FirstDrop">@Html.DisplayNameFor(model => model.FirstTry)</label>
+                        <select asp-for="FirstTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="FirstDrop"></select>
+                        <span asp-validation-for="FirstTry" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SecondTry" class="control-label" id="SecondDrop">@Html.DisplayNameFor(model => model.SecondTry)</label>
+                        <select asp-for="SecondTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="SecondDrop"></select>
+                        <span asp-validation-for="SecondTry" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ThirdTry" class="control-label" id="ThirdDrop">@Html.DisplayNameFor(model => model.ThirdTry)</label>
+                        <select asp-for="ThirdTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="ThirdDrop"></select>
+                        <span asp-validation-for="ThirdTry" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FourthTry" class="control-label" id="FourthDrop">@Html.DisplayNameFor(model => model.FourthTry)</label>
+                        <select asp-for="FourthTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="FourthDrop"></select>
+                        <span asp-validation-for="FourthTry" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="End Intervention" class="btn btn-secondary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="SecondTry" class="control-label" id="SecondDrop">@Html.DisplayNameFor(model => model.SecondTry)</label>
-                <select asp-for="SecondTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="SecondDrop"></select>
-                <span asp-validation-for="SecondTry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThirdTry" class="control-label" id="ThirdDrop">@Html.DisplayNameFor(model => model.ThirdTry)</label>
-                <select asp-for="ThirdTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="ThirdDrop"></select>
-                <span asp-validation-for="ThirdTry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FourthTry" class="control-label" id="FourthDrop">@Html.DisplayNameFor(model => model.FourthTry)</label>
-                <select asp-for="FourthTry" asp-items="@Html.GetEnumSelectList<Sooth>()" class="form-control" id="FourthDrop"></select>
-                <span asp-validation-for="FourthTry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="End Intervention" class="btn btn-secondary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

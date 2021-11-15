@@ -22,8 +22,14 @@ namespace Baby_Tracker.Models
         public string ImageFileName { get; set; }
         public double Weight { get; set; }
         public double Height { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date Added")]
         public DateTime DateAdded { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:YYYY/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Birth Date & Time")]
         public DateTime BirthDateTime { get; set; }
         [Display(Name = "Birth Weight")]

@@ -11,8 +11,14 @@ namespace Baby_Tracker.Models
         public Guid SleepId { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid BabyId { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 

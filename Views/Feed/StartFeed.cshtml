@@ -9,26 +9,31 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="StartFeed">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary">
-                        <input type="checkbox" checked autocomplete="off" asp-for="IsDreamFeed"> @Html.DisplayNameFor(model => model.IsDreamFeed)
-                    </label>
+        <div class="card bg-dark text-white">
+            <div class="card-title m-2"><strong>Feeding time</strong></div>
+
+            <form asp-action="StartFeed">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card-body">
+                    <div class="form-group form-check">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="IsDreamFeed">
+                            <label class="custom-control-label" for="customSwitch1">@Html.DisplayNameFor(model => model.IsDreamFeed)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Start" class="btn btn-secondary" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Start" class="btn btn-secondary" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
 <div>
     <a asp-action="BabiesLanding" asp-controller="Baby">Back to Babies Page</a>
 </div>
-
 
 
 
